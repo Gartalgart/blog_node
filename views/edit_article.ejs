@@ -1,9 +1,9 @@
 <%# Inclusion du header %>
     <%- include("partials/header") %>
 
-        <a href="/">← Retour à l'accueil</a>
+        <a href="/article/<%= article.id %>">← Retour à l'article</a>
 
-        <h2>Nouvel article</h2>
+        <h2>Modifier l'article</h2>
 
         <%# Affichage du message d'erreur si la validation a échoué %>
             <% if (error) { %>
@@ -12,49 +12,50 @@
                 </p>
                 <% } %>
 
-                    <%# Formulaire envoyé en POST vers /new %>
-                        <form action="/new" method="post">
+                    <%# Formulaire prérempli avec les données existantes de l'article %>
+                        <form action="/article/<%= article.id %>/edit" method="post">
                             <label for="title">Titre</label>
-                            <input type="text" id="title" name="title" required>
+                            <input type="text" id="title" name="title" value="<%= article.title %>" required>
 
-                            <%# Liste déroulante des auteurs (chargés depuis la BDD) %>
+                            <%# L'auteur actuel est présélectionné grâce à "selected" %>
                                 <label for="id_autor">Auteur</label>
                                 <select id="id_autor" name="id_autor" required>
-                                    <option value="">-- Choisir un auteur --</option>
                                     <% for (let i=0; i < autors.length; i++) { %>
-                                        <option value="<%= autors[i].id %>">
-                                            <%= autors[i].first_name %>
+                                        <option value="<%= autors[i].id %>" <%=autors[i].id===article.id_autor
+                                            ? 'selected' : '' %>><%= autors[i].first_name %>
                                                 <%= autors[i].last_name %>
                                         </option>
                                         <% } %>
                                 </select>
 
-                                <%# Liste déroulante des catégories (chargées depuis la BDD) %>
+                                <%# La catégorie actuelle est présélectionnée %>
                                     <label for="id_category">Catégorie</label>
                                     <select id="id_category" name="id_category" required>
-                                        <option value="">-- Choisir une catégorie --</option>
                                         <% for (let i=0; i < categories.length; i++) { %>
-                                            <option value="<%= categories[i].id %>">
-                                                <%= categories[i].name %>
+                                            <option value="<%= categories[i].id %>"
+                                                <%=categories[i].id===article.id_category ? 'selected' : '' %>><%=
+                                                    categories[i].name %>
                                             </option>
                                             <% } %>
                                     </select>
 
-                                    <%# Cases à cocher pour les tags (relation N,N avec table de jointure) %>
+                                    <%# Les tags déjà associés à l'article sont précochés grâce à "checked" %>
                                         <fieldset>
                                             <legend>Tags</legend>
                                             <% for (let i=0; i < tags.length; i++) { %>
                                                 <label>
-                                                    <input type="checkbox" name="tags" value="<%= tags[i].id %>">
+                                                    <input type="checkbox" name="tags" value="<%= tags[i].id %>"
+                                                        <%=selectedTags.includes(tags[i].id) ? 'checked' : '' %>>
                                                     <%= tags[i].name %>
                                                 </label>
                                                 <% } %>
                                         </fieldset>
 
                                         <label for="content">Contenu</label>
-                                        <textarea id="content" name="content" rows="10" required></textarea>
+                                        <textarea id="content" name="content" rows="10"
+                                            required><%= article.content %></textarea>
 
-                                        <button type="submit">Publier</button>
+                                        <button type="submit">Enregistrer</button>
                         </form>
 
                         <%- include("partials/footer") %>

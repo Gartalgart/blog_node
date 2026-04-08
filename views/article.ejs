@@ -1,38 +1,85 @@
-<%- include("partials/hearder") %>
+<%# Inclusion du header %>
+    <%- include("partials/header") %>
 
-<a href="/">← Retour à l'accueil</a>
+        <%# Lien retour vers la page d'accueil %>
+            <a href="/">← Retour à l'accueil</a>
 
-<h2><%= article.title %></h2>
+            <%# Titre de l'article %>
+                <h2>
+                    <%= article.title %>
+                </h2>
 
-<p>
-    Par <%= article.first_name %> <%= article.last_name %>
-    | Catégorie : <%= article.category_name %>
-</p>
-<p>
-    Publié le <%= new Date(article.created_at).toLocaleDateString("fr-FR") %>
-</p>
+                <%# Infos : auteur, catégorie et date %>
+                    <p>Par <%= article.first_name %>
+                            <%= article.last_name %> | Catégorie : <a href="/category/<%= article.id_category %>">
+                                    <%= article.category_name %>
+                                </a></p>
+                    <p>Publié le <%= new Date(article.created_at).toLocaleDateString("fr-FR") %>
+                    </p>
 
-<div class="tags">
-    <% for (let i = 0; i < tags.length; i++) { %>
-        <span class="badge"><%= tags[i].name %></span>
-    <% } %>
-</div>
+                    <%# Affichage des tags sous forme de badges cliquables %>
+                        <div class="tags">
+                            <% for (let i=0; i < tags.length; i++) { %>
+                                <a href="/tag/<%= tags[i].id %>" class="badge">
+                                    <%= tags[i].name %>
+                                </a>
+                                <% } %>
+                        </div>
 
-<div class="article-content">
-    <p><%= article.content %></p>
-</div>
+                        <%# Contenu complet de l'article %>
+                            <div class="article-content">
+                                <p>
+                                    <%= article.content %>
+                                </p>
+                            </div>
 
-<h3>Commentaires (<%= commentaries.length %>)</h3>
+                            <%# Boutons modifier et supprimer %>
+                                <div class="article-actions">
+                                    <a href="/article/<%= article.id %>/edit" class="btn">Modifier</a>
+                                    <%# Formulaire de suppression avec confirmation JavaScript %>
+                                        <form action="/article/<%= article.id %>/delete" method="post"
+                                            style="display:inline;">
+                                            <button type="submit" class="btn btn-danger"
+                                                onclick="return confirm('Supprimer cet article ?')">Supprimer</button>
+                                        </form>
+                                </div>
 
-<% if (commentaries.length > 0) { %>
-    <% for (let i = 0; i < commentaries.length; i++) { %>
-        <div class="comment">
-            <p><strong><%= commentaries[i].autor_com %></strong> - <%= new Date(commentaries[i].created_at).toLocaleDateString("fr-FR") %></p>
-            <p><%= commentaries[i].content %></p>
-        </div>
-    <% } %>
-<% } else { %>
-    <p>Aucun commentaire pour le moment.</p>
-<% } %>
+                                <%# Section commentaires %>
+                                    <h3>Commentaires (<%= commentaries.length %>)</h3>
 
-<%- include("partials/footer") %>
+                                    <% for (let i=0; i < commentaries.length; i++) { %>
+                                        <div class="comment">
+                                            <p><strong>
+                                                    <%= commentaries[i].autor_com %>
+                                                </strong> - <%= new
+                                                    Date(commentaries[i].created_at).toLocaleDateString("fr-FR") %>
+                                            </p>
+                                            <p>
+                                                <%= commentaries[i].content %>
+                                            </p>
+                                        </div>
+                                        <% } %>
+
+                                            <% if (commentaries.length===0) { %>
+                                                <p>Aucun commentaire pour le moment.</p>
+                                                <% } %>
+
+                                                    <%# Formulaire pour ajouter un commentaire %>
+                                                        <h3>Laisser un commentaire</h3>
+
+                                                        <form action="/article/<%= article.id %>/comment" method="post">
+                                                            <label for="autor_com">Nom</label>
+                                                            <input type="text" id="autor_com" name="autor_com" required>
+
+                                                            <label for="email_autor_com">Email</label>
+                                                            <input type="email" id="email_autor_com"
+                                                                name="email_autor_com" required>
+
+                                                            <label for="content">Commentaire</label>
+                                                            <textarea id="content" name="content" rows="4"
+                                                                required></textarea>
+
+                                                            <button type="submit">Envoyer</button>
+                                                        </form>
+
+                                                        <%- include("partials/footer") %>

@@ -1,4 +1,3 @@
-/* Reset */
 * {
     margin: 0;
     padding: 0;
@@ -6,15 +5,30 @@
 }
 
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f5f5f5;
-    color: #333;
+    font-family: "Comic Sans MS", "Trebuchet MS", cursive;
+    background-color: beige;
+    color: black;
     line-height: 1.6;
 }
 
-/* Header */
+main {
+    max-width: 800px;
+    margin: 30px auto;
+    padding: 0 20px;
+}
+
+main>h2 {
+    margin-bottom: 20px;
+}
+
+main>a {
+    display: inline-block;
+    margin-bottom: 15px;
+    color: blue;
+}
+
 header {
-    background-color: #2c3e50;
+    background-color: blue;
     color: white;
     padding: 15px 30px;
     display: flex;
@@ -26,14 +40,13 @@ header h1 {
     font-size: 1.4rem;
 }
 
-header h1 a {
+header h1 a,
+nav a {
     color: white;
     text-decoration: none;
 }
 
 nav a {
-    color: white;
-    text-decoration: none;
     margin-left: 20px;
     font-size: 0.95rem;
 }
@@ -42,24 +55,6 @@ nav a:hover {
     text-decoration: underline;
 }
 
-/* Main */
-main {
-    max-width: 800px;
-    margin: 30px auto;
-    padding: 0 20px;
-}
-
-main > h2 {
-    margin-bottom: 20px;
-}
-
-main > a {
-    display: inline-block;
-    margin-bottom: 15px;
-    color: #2c3e50;
-}
-
-/* Article cards (index) */
 .article-card {
     background: white;
     border-radius: 6px;
@@ -73,7 +68,7 @@ main > a {
 }
 
 .article-card h3 a {
-    color: #2c3e50;
+    color: blue;
     text-decoration: none;
 }
 
@@ -83,26 +78,14 @@ main > a {
 
 .article-card p {
     font-size: 0.9rem;
-    color: #555;
+    color: black;
     margin-bottom: 5px;
 }
 
-/* Tags badges */
-.tags {
-    margin: 15px 0;
+.article-card a {
+    color: blue;
 }
 
-.badge {
-    display: inline-block;
-    background-color: #2c3e50;
-    color: white;
-    padding: 3px 10px;
-    border-radius: 12px;
-    font-size: 0.8rem;
-    margin-right: 5px;
-}
-
-/* Article content */
 .article-content {
     background: white;
     padding: 20px;
@@ -111,7 +94,29 @@ main > a {
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
-/* Comments */
+.tags {
+    margin: 15px 0;
+}
+
+.badge {
+    display: inline-block;
+    background-color: blue;
+    color: white;
+    padding: 3px 10px;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    margin-right: 5px;
+    text-decoration: none;
+}
+
+.badge:hover {
+    background-color: blue;
+}
+
+.article-actions {
+    margin: 20px 0;
+}
+
 h3 {
     margin-top: 25px;
     margin-bottom: 10px;
@@ -131,7 +136,6 @@ h3 {
     margin-bottom: 5px;
 }
 
-/* Form (new article) */
 form {
     background: white;
     padding: 25px;
@@ -148,11 +152,12 @@ form label {
 }
 
 form input[type="text"],
+form input[type="email"],
 form select,
 form textarea {
     width: 100%;
     padding: 8px 10px;
-    border: 1px solid #ccc;
+    border: 1px solid beige;
     border-radius: 4px;
     font-size: 0.9rem;
 }
@@ -162,7 +167,7 @@ form textarea {
 }
 
 fieldset {
-    border: 1px solid #ccc;
+    border: 1px solid beige;
     border-radius: 4px;
     padding: 10px 15px;
     margin-top: 15px;
@@ -181,26 +186,46 @@ fieldset label {
     margin-top: 5px;
 }
 
+.btn,
 form button {
-    margin-top: 20px;
-    padding: 10px 25px;
-    background-color: #2c3e50;
+    display: inline-block;
+    padding: 8px 18px;
+    background-color: blue;
     color: white;
-    border: none;
+    text-decoration: none;
     border-radius: 4px;
-    font-size: 0.95rem;
+    font-size: 0.9rem;
+    border: none;
     cursor: pointer;
+    margin-right: 8px;
 }
 
+.btn:hover,
 form button:hover {
-    background-color: #1a252f;
+    background-color: blue;
+    scale: 1.1;
 }
 
-/* Footer */
+.btn-danger {
+    background-color: red;
+}
+
+.btn-danger:hover {
+    scale: 1.2;
+}
+
+.error {
+    background-color: beige;
+    color: orange;
+    padding: 10px 15px;
+    border-radius: 4px;
+    margin-bottom: 15px;
+}
+
 footer {
     text-align: center;
     padding: 20px;
-    color: #888;
+    color: grey;
     font-size: 0.85rem;
     margin-top: 30px;
 }

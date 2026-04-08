@@ -1,27 +1,38 @@
-<%- include("partials/hearder") %>
+<%# Inclusion du header (haut de page HTML) %>
+    <%- include("partials/header") %>
 
-<h2>Les articles</h2>
+        <%# Titre de la page (change selon le filtre : catégorie, tag, ou tous les articles) %>
+            <h2>
+                <%= titre %>
+            </h2>
 
-<% if (articles.length > 0) { %>
-    <% for (let i = 0; i < articles.length; i++) { %>
-        <div class="article-card">
-            <h3>
-                <a href="/article/<%= articles[i].id %>"><%= articles[i].title %></a>
-            </h3>
-            <p>
-                Par <%= articles[i].first_name %> <%= articles[i].last_name %>
-                | Catégorie : <%= articles[i].category_name %>
-            </p>
-            <p>
-                Publié le <%= new Date(articles[i].created_at).toLocaleDateString("fr-FR") %>
-            </p>
-            <p>
-                <%= articles[i].content.substring(0, 100) %>...
-            </p>
-        </div>
-    <% } %>
-<% } else { %>
-    <p>Aucun article pour le moment.</p>
-<% } %>
+            <%# Boucle sur tous les articles pour les afficher en cartes %>
+                <% for (let i=0; i < articles.length; i++) { %>
+                    <div class="article-card">
+                        <%# Titre cliquable qui mène vers la page de détail %>
+                            <h3><a href="/article/<%= articles[i].id %>">
+                                    <%= articles[i].title %>
+                                </a></h3>
+                            <%# Infos : auteur et catégorie (cliquable pour filtrer) %>
+                                <p>Par <%= articles[i].first_name %>
+                                        <%= articles[i].last_name %> | Catégorie : <a
+                                                href="/category/<%= articles[i].id_category %>">
+                                                <%= articles[i].category_name %>
+                                            </a></p>
+                                <%# Date de publication formatée en français %>
+                                    <p>Publié le <%= new Date(articles[i].created_at).toLocaleDateString("fr-FR") %>
+                                    </p>
+                                    <%# Aperçu : les 100 premiers caractères du contenu %>
+                                        <p>
+                                            <%= articles[i].content.substring(0, 100) %>...
+                                        </p>
+                    </div>
+                    <% } %>
 
-<%- include("partials/footer") %>
+                        <%# Message si aucun article trouvé %>
+                            <% if (articles.length===0) { %>
+                                <p>Aucun article pour le moment.</p>
+                                <% } %>
+
+                                    <%# Inclusion du footer (bas de page HTML) %>
+                                        <%- include("partials/footer") %>
